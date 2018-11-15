@@ -1,6 +1,6 @@
 ---
 title: "Social Survey 2010"
-author: "Put your name here!"
+author: "Gloria Hernandez"
 date: "Fall 2018"
 output:
   html_document:
@@ -22,7 +22,9 @@ Use the data from the 2010 general social survey to explore whether belief in co
 # Methods
 
 <!--Decide on your methods:  use "variable analysis" or other appropriate descriptors.  Make sure to choose at least one graphical method and at least one numerical method.!-->
-
+  We use bar graphs for graphical descriptive data and visualize three different comparisons: race and continental drift, race and capitol punishment, capitol punishment and continental drift. We also use xtabs to create crosstabulations to examine the relationship between the beliefs and race in order to discover if they are independent of each other. For our inferential results we use the chi squared test.
+    
+    
 #Results
 
 <!--Divide this section into two sub-sections:  One for your descriptive  results and one for your inferential results.!-->
@@ -42,17 +44,72 @@ alldata <- read.csv(file="gss2010.csv", header=TRUE)
 ```{r}
 barchartGC(~race+condrift, data=alldata, type = "percent") 
 ```
+    
+  In this bar graph we observe that 10% of others and whites believe that continental drift is false. There is a disparity between what blacks think of it, about 25% believe that continental drift is false. They have a different belief on continental drift.
+    
 
+```{r}
+barchartGC(~race+cappun, data=alldata, type = "percent")
+```
+   
+  In this bar graph we observe that others and whites both favor capitol punishment than oppose it. However blacks oppose capitol punishment more than they favor it. Whites are more likely to be in favor, so much that itlooks like a drastic difference between white and other. They all look different here. 
+    
+```{r}
+barchartGC(~cappun+condrift, data=alldata, type = "percent")
+```
+    
+  In this bar graph we observe that only about 10% that favors and opposes capitol punishment believes that continental drift is false.  
 
 ### Numerical Descriptive Results
 
 <!--Numerical results go here. Use the numerical results to describe the patterns if any that exist in the data as focused toward the research question!-->
+```{r}
+tab = xtabs(~race+condrift, data=alldata)
+rowPerc(tab)
+colPerc(tab)
+```
+    
+  We observe that black has the greater amount of those who believe continental drift is false. 90.54 of others believe continental drift is true. 91.58 of whites believe that continental drift is true. This demonstrates the difference in beliefs between the races. 
+   
+```{r}
+tab = xtabs(~race+cappun, data=alldata)
+rowPerc(tab)
+colPerc(tab)
+```
+   
+  We observe that the race that is the most in favor of capitol punishment is white, 72.74. The race that is the least in favor of capitol punishment is black,46.79. There are more others than favor capitol punisment than oppose it however there isn not a great difference. None of these are quite similar. 
+   
+```{r}
+tab = xtabs(~cappun+condrift, data=alldata)
+rowPerc(tab)
+colPerc(tab)
+```
+   
+ We observe that these are quite similar compared to the results above. Of those that favor capitol punishment, 10.42 believe continental drift is false and 89.58 believe that it is true. Of those that oppose capitol punishment, 11.33 believe continental drift is false and 88.67 believe it is true. 
 
 ## Inferential Results
 
 <!--State hypothesis clearly.  Make sure your discussion of the inferential test covers all the aspects that the test output produces, such as test statistic, p-value etc.  Make a decision about the null hypothesis, explain the assumptions on which the selected test/procedure was based, and why the chosen procedure satisfys the assumptions and is appropriate to answer the research question!-->
+```{r}
+chisqtestGC(~race+condrift, data=alldata, graph = TRUE)
+```
+  
+  The Chi-squared test shows us that the greatest contributor to the value of chisq statistic is black,16.64 false. White contributed 2.37. The counts observed and the counts expected by the null hypothesis differ.The p value is 0. The Chi-squared statistic is 21.2753. Since it is large that implies that the data observed data does not fit the expected data well, so we reject the null hypothesis. 
 
+```{r}
+chisqtestGC(~race+cappun, data=alldata, graph = TRUE)
+```
+  
+  The Chi-squared test shows us that the greatest contributor to the value of chisq statistic is black,17.82 false. White contributed 5.94. The counts observed and the counts expected by the null hypothesis differ significantly. The p value is 0. The Chi-squared statistic is 82.6238. Since it is large that implies that the data observed data does not fit the expected data well, so we reject the null hypothesis. 
+
+```{r}
+chisqtestGC(~cappun+condrift, data=alldata, graph = TRUE)
+```
+  
+  The Chi-squared test shows us that the those who favor capitol punishment and believe continental drift is false contributed 0.04 and those who oppose and believe it is true contributed 0.09.The counts observed and the counts the counts expected by the null hypothesis differ but not significantly. The chi-square statstic is 0.0696.The p value is 0.7919 and since it is less than the significance level,we reject the null hypothesis. 
 
 # Discussion and Conclusion
 
 <!--Discussion and conclusion here.  If you found a relationship be sure to consider whether the relationship occurs because one of the variavbles causes the other, or whether they perhasps are related for some other reason.  Watch the chapter 6 videos from the GeorgeTown videos collection.!-->
+  
+  In this study we used data from the 2010 general social survey to determine whether belief in continental drift, views on capitol punishment, and race are independent of each other. By looking at bar graphs, numerical data, and using the chi-squared test to determine if the observed counts differ from the counts expected by the null hypothesis, we can conculde that we can reject that null hypothesis that belief in continental drift, views on capitol punishment, and race are independent of each other and accept the alternative hypothesis.  
